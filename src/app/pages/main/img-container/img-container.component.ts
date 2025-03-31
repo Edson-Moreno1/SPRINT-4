@@ -11,14 +11,14 @@ import { AppImage } from '../../../models/models';
 export class ImgContainerComponent {
 
   @Input() images!: AppImage[]
-  @Output() reloadImgs = new EventEmitter<void>();
+
 
 constructor(private imgService:ImgService) { }
 
 
 deleteImage(id:number){
   this.imgService.deleteImageByID(id);
-  this.reloadImgs.emit();
+
 }
 
 

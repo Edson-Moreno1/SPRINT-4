@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
 import { AppImage } from '../models/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImgService {
   private storageKey = 'images';
+  private imagesSubject = new  BehaviorSubject<AppImage[]>(this.getImagesFromStorage();)
+
+  images$ = this.imagesSubject.asObservable();
 
   constructor() {}
+private getImagesFromStorage(): AppImage[]{
+  const storedImages = localStorage.getItem(this.storageKey);
+  return storedImages ? JSON.parse(storedImages): [];
+}
+ 
 
-  /**
-   * Obtiene todas las imágenes almacenadas
-   * @returns Array de imágenes
-   */
-  getImages(): AppImage[] {
-    const storedImages = localStorage.getItem(this.storageKey);
-    return storedImages ? JSON.parse(storedImages) as AppImage[] : [];
-  }
+private updateStorage(images:AppImage[]){
+  localStorage.setItem(this.storageKey,JSON.stringify(images));
+  this.imagesSubject.next(images);
+}
 
-  /**
-   * Guarda una nueva imagen
-   * @param name Nombre de la imagen
-   * @param src Fuente (URL o base64) de la imagen
-   */
+getImages():AppImage[]{
+  return this.imagesSubject.getValue();
+}
+
+  
   saveImage(name: string, src: string): void {
     const images = this.getImages();
     const newImage: AppImage = {
@@ -30,17 +35,12 @@ export class ImgService {
       name,
       src
     };
-    images.push(newImage);
-    localStorage.setItem(this.storageKey, JSON.stringify(images));
+    const updated = [...images,newImage];
+    this.updateStorage(updated);
   }
-
-  /**
-   * Elimina una imagen por su ID
-   * @param id_image ID de la imagen a eliminar
-   */
+  
   deleteImageByID(id_image: number): void {
-    let images = this.getImages();
-    images = images.filter(image => image.id_image !== id_image);
-    localStorage.setItem(this.storageKey, JSON.stringify(images));
+   const updated = this.getImages().filter(img=> img.id_image !== id_image);
+   this.updateStorage(updated);
   }
 }

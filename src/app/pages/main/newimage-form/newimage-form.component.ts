@@ -12,7 +12,7 @@ export class NewimageFormComponent {
   @Input() modalID!: string;
   imageUrl: string | null='';
   imageName: string=''
-  @Output() reloadImg= new EventEmitter<void>
+
 
 constructor(private imgService:ImgService){} 
 
@@ -27,28 +27,28 @@ onFileSelected(event:any){
     reader.readAsDataURL(file);
   }
 }
-saveImage(){
-  if(!this.imageUrl || !this.imageName) {
+saveImage() {
+  if (!this.imageUrl || !this.imageName) {
     alert('Selecciona una imagen antes de guardar');
     return;
   }
 
-this.imgService.saveImage(this.imageName, this.imageUrl);
+  this.imgService.saveImage(this.imageName, this.imageUrl);
 
-this.loadImages();
-this.imageUrl= null;
-this.imageName= '';
+  // Limpiar el formulario
+  this.resetForm();
 
-const input = document.getElementById('formFile') as HTMLInputElement;
-if (input){
-  input.value=''
-}
-$(`#${this.modalID}`).modal('hide');
+  // Cerrar el modal
+  $(`#${this.modalID}`).modal('hide');
 }
 
-loadImages(){
-  this.reloadImg.emit();
+resetForm() {
+  this.imageUrl = null;
+  this.imageName = '';
+
+  const input = document.getElementById('imageInput') as HTMLInputElement;
+  if (input) {
+    input.value = '';
+  }
 }
-
-
 }

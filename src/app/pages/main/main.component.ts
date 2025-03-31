@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddButtonComponent } from "./add-button/add-button.component";
 import { ImgContainerComponent } from "./img-container/img-container.component";
 import { NewimageFormComponent } from "./newimage-form/newimage-form.component";
@@ -11,14 +11,16 @@ import { AppImage } from '../../models/models';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
 NewImageModalId : string='modal-create-image';
 imgArray: AppImage[] = [];
 
 constructor(private imgService:ImgService) { }
 
 ngOnInit(): void{
-  this.imgArray = this.imgService.getImages();
+  this.imgService.images$.subscribe(images =>{
+    this.imgArray = images;
+  });
 }
 
 
