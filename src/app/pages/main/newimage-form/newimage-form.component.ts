@@ -17,6 +17,9 @@ export class NewimageFormComponent {
 constructor(private imgService:ImgService){} 
 
 onFileSelected(event:any){
+  this.imageUrl= null;
+  this.imageName='';
+
   const file = event.target.files[0];
   if(file){
     const reader = new FileReader();
@@ -34,6 +37,7 @@ saveImage() {
   }
 
   this.imgService.saveImage(this.imageName, this.imageUrl);
+  
 
   // Limpiar el formulario
   this.resetForm();
@@ -49,6 +53,8 @@ resetForm() {
   const input = document.getElementById('imageInput') as HTMLInputElement;
   if (input) {
     input.value = '';
+    input.type='text';
+    input.type='file';
   }
 }
 }

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ImgService {
   private storageKey = 'images';
-  private imagesSubject = new  BehaviorSubject<AppImage[]>(this.getImagesFromStorage();)
+  private imagesSubject = new  BehaviorSubject<AppImage[]>(this.getImagesFromStorage());
 
   images$ = this.imagesSubject.asObservable();
 

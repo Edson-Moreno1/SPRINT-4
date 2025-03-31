@@ -20,7 +20,13 @@ deleteImage(id:number){
   this.imgService.deleteImageByID(id);
 
 }
+viewImage(img: AppImage) {
+  // Por ahora, solo mostrar en consola
+  console.log('👁️ Imagen vista:', img);
 
+  // O puedes abrir en nueva pestaña:
+  window.open(img.src, '_blank');
+}
 
 
 
