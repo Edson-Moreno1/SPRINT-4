@@ -1,0 +1,11 @@
+
+<!--Boton  ver con signo +-->
+<app-add-button [modalID]="NewImageModalId"></app-add-button>
+<!--Imagenes almacenadas en localStorage-->
+<app-img-container [images]="imgArray" 
+(reloadImgs)="ngOnInit()">
+</app-img-container>
+
+<!--En caso de dar clic en el boton  del signo + se manda a llamar  el modal  con el forumulaio que está  en el componente appnewimage-->
+
+<app-newimage-form [modalID]="NewImageModalId" (reloadImg)="ngOnInit()"></app-newimage-form>
