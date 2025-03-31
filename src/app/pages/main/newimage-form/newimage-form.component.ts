@@ -34,11 +34,16 @@ saveImage(){
   }
 
 this.imgService.saveImage(this.imageName, this.imageUrl);
+
 this.loadImages();
 this.imageUrl= null;
 this.imageName= '';
 
-$('#{this.modalID}').modal('hide');
+const input = document.getElementById('formFile') as HTMLInputElement;
+if (input){
+  input.value=''
+}
+$(`#${this.modalID}`).modal('hide');
 }
 
 loadImages(){

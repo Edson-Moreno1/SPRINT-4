@@ -8,7 +8,12 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Nueva imagen</label>
-                        <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)" >
+                        <input
+                        id="imageInput"
+                        type="file"
+                        (change)="onFileSelected($event)"
+                        class="form-control"
+                      />
                     </div>
                     </div>
                     <div class="modal-footer">
